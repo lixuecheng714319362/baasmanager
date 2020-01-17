@@ -1,7 +1,7 @@
 # fabric引擎端口
 BaasFabricEnginePort: 4991
 # baas 的根目录
-BaasRootPath: /home/jonluo/gopath/src/github.com/jonluo94/baasmanager
+BaasRootPath: /root/goProject/baasmanager
 # nfs server ip
 BaasNfsServer: 10.1.157.32
 # k8s引擎地址
