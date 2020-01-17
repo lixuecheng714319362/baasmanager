@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"fmt"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -40,6 +41,7 @@ func (k *KubeEngine) DoCreateTasks() {
 
 	for !k.jobs.IsEmpty() {
 		item := k.jobs.Dequeue()
+		fmt.Errorf("item in kube engine.go is %+v", item)
 		switch item.(type) {
 		case *corev1.Namespace:
 			k.client.CreateNameSpace(item.(*corev1.Namespace))

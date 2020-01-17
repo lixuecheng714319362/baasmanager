@@ -285,6 +285,7 @@ func (c *ConnectConfig) GetBytes(maps map[string]interface{}) []byte {
 	}
 
 	domains := new(model.ChainDomain)
+	logger.Errorf("jsonStr in GetBytes is %v", jsonStr)
 	err = json.Unmarshal(jsonStr, domains)
 	if err != nil {
 		logger.Errorf("error: %v", err)

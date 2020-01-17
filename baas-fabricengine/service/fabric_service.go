@@ -73,6 +73,7 @@ func (f FabricService) defChannelAndBuild(ctx *gin.Context) {
 	configBuilder.BuildTxFile()
 
 	artifacts := generate.NewChannelArtifacts(chain, paths.ArtifactPath)
+	logger.Errorf("channel name is %+v\n ", artifacts)
 	//生成channel.tx
 	artifacts.GenerateOrgsChannel()
 	//生成锚节点.tx
@@ -90,6 +91,7 @@ func (f FabricService) defChannelAndBuild(ctx *gin.Context) {
 	fsdk := fasdk.NewFabricClient(connectConfig, chain.ChannelName, chain.PeersOrgs, fautil.GetFirstOrderer(chain))
 	defer fsdk.Close()
 	fsdk.Setup()
+	logger.Errorf("fskd is %+v\n, org is %v\n", fsdk, fsdk.Orgs)
 	//创建channel
 	fsdk.CreateChannel(fautil.GetChannelTx(chain, paths.ArtifactPath))
 	//跟新锚节点
@@ -481,6 +483,7 @@ func (f FabricService) invokeChaincode(ctx *gin.Context) {
 }
 
 func (f FabricService) getConnectConfig(chain model.FabricChain, paths generate.UserChainPath) ([]byte, error) {
+	logger.Errorf("chain is %+v\n, paths is %+v\n", chain, paths)
 	nss := fautil.GetNamesapces(chain)
 	res := f.kube.getChainDomain(nss)
 

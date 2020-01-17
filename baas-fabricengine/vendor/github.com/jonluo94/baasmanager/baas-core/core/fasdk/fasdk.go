@@ -48,6 +48,7 @@ func (f *FabricClient) Setup() error {
 		logger.Error("failed to create SDK")
 		return err
 	}
+	logger.Errorf("sdk in fasdk.go is %+v\n", sdk)
 	f.sdk = sdk
 
 	resmgmtClients := make([]*resmgmt.Client, 0)
