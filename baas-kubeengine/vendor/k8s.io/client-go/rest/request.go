@@ -760,6 +760,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 				Header:     http.Header{"Retry-After": []string{"1"}},
 				Body:       ioutil.NopCloser(bytes.NewReader([]byte{})),
 			}
+			logger.Errorf("response data is %+v\n", resp)
 		}
 		logger.Info("before done func#####")
 		done := func() bool {

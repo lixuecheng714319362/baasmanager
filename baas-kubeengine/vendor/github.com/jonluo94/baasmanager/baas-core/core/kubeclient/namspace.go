@@ -18,6 +18,7 @@ func (c *Clients) GetNamespaceList(ops metav1.ListOptions) *corev1.NamespaceList
 }
 
 func (c *Clients) CreateNameSpace(ns *corev1.Namespace) (*corev1.Namespace, error) {
+	logger.Infof("clients in createNameSpec is %+v\n", c.KubeClient.CoreV1().Namespaces())
 	nameSpace, err := c.KubeClient.CoreV1().Namespaces().Create(ns)
 	if err != nil {
 		logger.Errorf(err.Error())
