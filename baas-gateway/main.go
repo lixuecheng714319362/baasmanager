@@ -33,7 +33,7 @@ func main() {
 		api.POST("/user/login", apiController.UserLogin)
 		api.POST("/user/logout", apiController.UserLogout)
 		//认证校验
-		api.Use(apiController.UserAuthorize)
+		//api.Use(apiController.UserAuthorize)
 		api.GET("/user/info", apiController.UserInfo)
 		api.GET("/user/list", apiController.UserList)
 		api.POST("/user/add", apiController.UserAdd)
