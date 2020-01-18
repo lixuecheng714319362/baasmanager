@@ -5,3 +5,4 @@ bin/
 baas-gateway/baas-gateway
 baas-fabricengine/baas-fabricengine
 baas-kubeengine/baas-kubeengine
+baas-nfsshared/*
