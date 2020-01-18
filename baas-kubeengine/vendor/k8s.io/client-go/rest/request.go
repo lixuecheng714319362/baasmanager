@@ -710,6 +710,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 	// Right now we make about ten retry attempts if we get a Retry-After response.
 	maxRetries := 10
 	retries := 0
+	logger.Infof("ake about ten retry attempts if we get a Retry-After response, url is %+v\n", r.baseURL)
 	for {
 		url := r.URL().String()
 		req, err := http.NewRequest(r.verb, url, r.body)
@@ -737,6 +738,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 			r.tryThrottle()
 		}
 		resp, err := client.Do(req)
+		logger.Infof("after client.DO(), get resp is %+v\n", resp)
 		updateURLMetrics(r, resp, err)
 		if err != nil {
 			r.backoffMgr.UpdateBackoff(r.URL(), err, 0)
@@ -759,7 +761,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 				Body:       ioutil.NopCloser(bytes.NewReader([]byte{})),
 			}
 		}
-
+		logger.Info("befor done func#####")
 		done := func() bool {
 			// Ensure the response body is fully read and closed
 			// before we reconnect, so that we reuse the same TCP
@@ -811,6 +813,7 @@ func (r *Request) Do() Result {
 	var result Result
 	err := r.request(func(req *http.Request, resp *http.Response) {
 		result = r.transformResponse(resp, req)
+		logger.Infof("resp in k8s.io request.go Do() is %+v\n", resp)
 	})
 	if err != nil {
 		return Result{err: err}
