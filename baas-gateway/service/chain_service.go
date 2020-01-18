@@ -20,6 +20,7 @@ func (l *ChainService) Add(chain *entity.Chain) (bool, string) {
 	i, err := l.DbEngine.Insert(chain)
 	if err != nil {
 		logger.Error(err.Error())
+		return false, err.Error()
 	}
 	if i > 0 {
 		return true, "add success"

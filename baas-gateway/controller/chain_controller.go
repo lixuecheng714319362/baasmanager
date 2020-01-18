@@ -17,10 +17,12 @@ func (a *ApiController) ChainAdd(ctx *gin.Context) {
 
 	if err := ctx.ShouldBindJSON(chain); err != nil {
 		gintool.ResultFail(ctx, err)
+		logger.Errorf("should bind to json error happend, %v\n", err)
 		return
 	}
 	chain.Created = time.Now().Unix()
 	isSuccess, msg := a.chainService.Add(chain)
+	logger.Infof("issuccess is %v, msg is %v\n", isSuccess, msg)
 	if isSuccess {
 		gintool.ResultMsg(ctx, msg)
 	} else {
