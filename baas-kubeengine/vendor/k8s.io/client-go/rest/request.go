@@ -21,6 +21,7 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
+	"github.com/jonluo94/baasmanager/baas-core/common/log"
 	"io"
 	"io/ioutil"
 	"mime"
@@ -50,6 +51,7 @@ var (
 	// longThrottleLatency defines threshold for logging requests. All requests being
 	// throttle for more than longThrottleLatency will be logged.
 	longThrottleLatency = 50 * time.Millisecond
+	logger = log.GetLogger("gateway-controller", log.INFO)
 )
 
 // HTTPClient is an interface for testing a request object.
@@ -803,6 +805,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 //  * If the server responds with a status: *errors.StatusError or *errors.UnexpectedObjectError
 //  * http.Client.Do errors are returned directly.
 func (r *Request) Do() Result {
+	logger.Infof("request in k8s.io is %+v\n", r)
 	r.tryThrottle()
 
 	var result Result

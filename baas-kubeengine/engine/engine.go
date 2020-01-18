@@ -43,7 +43,10 @@ func (k *KubeEngine) DoCreateTasks() {
 		logger.Infof("item in kube DoCreateTasks func is %+v\n", item)
 		switch item.(type) {
 		case *corev1.Namespace:
-			k.client.CreateNameSpace(item.(*corev1.Namespace))
+			_, err := k.client.CreateNameSpace(item.(*corev1.Namespace))
+			if err != nil {
+				return
+			}
 		case *appsv1.Deployment:
 			k.client.CreateDeployment(item.(*appsv1.Deployment))
 		case *corev1.Service:

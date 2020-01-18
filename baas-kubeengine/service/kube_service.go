@@ -99,9 +99,7 @@ func (k *KubeService) DeployData(ctx *gin.Context) {
 		return
 	}
 	que := engine.Bytes2K8sEntities(util.Yamls2Jsons(pro.Data))
-	logger.Infof("que in kubeengine deploydata function is %+v\n", que)
 	engine := engine.NewKubeEngine(que, k.client)
-	logger.Infof("engine in kubeengine deploydata function is %+v\n", engine)
 	engine.DoCreateTasks()
 	gintool.ResultMsg(ctx, "success")
 }
