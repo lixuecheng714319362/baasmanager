@@ -738,7 +738,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 			r.tryThrottle()
 		}
 		resp, err := client.Do(req)
-		logger.Infof("after client.DO(), get resp is %+v\n", resp)
+		logger.Infof("after client.DO(), get resp is %+v, err is %v\n", resp, err)
 		updateURLMetrics(r, resp, err)
 		if err != nil {
 			r.backoffMgr.UpdateBackoff(r.URL(), err, 0)
@@ -761,7 +761,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 				Body:       ioutil.NopCloser(bytes.NewReader([]byte{})),
 			}
 		}
-		logger.Info("befor done func#####")
+		logger.Info("before done func#####")
 		done := func() bool {
 			// Ensure the response body is fully read and closed
 			// before we reconnect, so that we reuse the same TCP
