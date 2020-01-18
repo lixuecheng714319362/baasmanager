@@ -2,3 +2,6 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 .idea/**
 bin/
+baas-gateway/baas-gateway
+baas-fabricengine/baas-fabricengine
+baas-kubeengine/baas-kubeengine
