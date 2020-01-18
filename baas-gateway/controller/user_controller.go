@@ -2,12 +2,14 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"strconv"
-	"github.com/jonluo94/baasmanager/baas-gateway/entity"
 	"github.com/jonluo94/baasmanager/baas-core/common/gintool"
+	"github.com/jonluo94/baasmanager/baas-core/common/log"
+	"github.com/jonluo94/baasmanager/baas-gateway/entity"
 	"github.com/jonluo94/baasmanager/baas-gateway/model"
-	"github.com/jonluo94/baasmanager/baas-core/common/password"
+	"strconv"
 )
+
+var logger = log.GetLogger("gateway-controller", log.INFO)
 
 func (a *ApiController) UserAdd(ctx *gin.Context) {
 
@@ -103,11 +105,12 @@ func (a *ApiController) UserLogin(ctx *gin.Context) {
 		gintool.ResultFail(ctx, "username error")
 		return
 	}
-	vali := password.Validate(login.Password, u.Password)
-	if !vali {
-		gintool.ResultFail(ctx, "password error")
-		return
-	}
+	logger.Info("validate passwd always return true!")
+	//vali := password.Validate(login.Password, u.Password)
+	//if !vali {
+	//	gintool.ResultFail(ctx, "password error")
+	//	return
+	//}
 
 	type UserInfo map[string]interface{}
 

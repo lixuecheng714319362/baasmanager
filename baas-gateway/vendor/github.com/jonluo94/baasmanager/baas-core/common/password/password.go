@@ -16,7 +16,6 @@ func Encode(password string, saltSize int, hasher string) string {
 }
 
 func Validate(password, cryto string) bool {
-	logger.Info("hahahahah!")
 	valid, err := unchained.CheckPassword(password, cryto)
 	if err != nil {
 		logger.Error("Error decoding password: %s\n", err)
