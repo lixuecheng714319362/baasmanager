@@ -135,6 +135,7 @@ func (l *ChainService) BuildChain(chain *entity.Chain) (bool, string) {
 func (l *ChainService) RunChain(chain *entity.Chain) (bool, string) {
 
 	fc := entity.ParseFabircChain(chain)
+	logger.Infof("fabricchain model in runchain function is %+v\n", fc)
 	resp := l.FabircService.DeployK8sData(fc)
 	var ret gintool.RespData
 	err := json.Unmarshal(resp, &ret)
@@ -142,6 +143,7 @@ func (l *ChainService) RunChain(chain *entity.Chain) (bool, string) {
 		return false, "run fail"
 	}
 
+	logger.Infof("RespData model in runchain function is %+v\n", ret)
 	if ret.Code == 0 {
 		chain.Status = 2
 		return l.UpdateStatus(chain)

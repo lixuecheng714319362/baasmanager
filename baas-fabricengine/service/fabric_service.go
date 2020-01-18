@@ -36,23 +36,23 @@ func NewFabricService() FabricService {
 func (f FabricService) defChain(ctx *gin.Context) {
 	var chain model.FabricChain
 	if err := ctx.ShouldBindJSON(&chain); err != nil {
-		logger.Debugf("fabricService defchain error happends, should bind json error is %v\n", err)
+		logger.Infof("fabricService defchain error happends, should bind json error is %v\n", err)
 		gintool.ResultFail(ctx, err)
 		return
 	}
 	//获取目录
 	paths := generate.NewProjetc().BuildProjectDir(chain)
-	logger.Debugf("defchain paths is %+v\n", paths)
+	logger.Infof("defchain paths is %+v\n", paths)
 
 	configBuilder := generate.NewConfigBuilder(chain, paths.ArtifactPath)
-	logger.Debugf("defchain configBuilder is %+v\n", configBuilder)
+	logger.Infof("defchain configBuilder is %+v\n", configBuilder)
 	//生成crypto-feconfig.yaml
 	configBuilder.BuildCryptoFile()
 	//生成configtx.yaml
 	configBuilder.BuildTxFile()
 
 	artifacts := generate.NewChannelArtifacts(chain, paths.ArtifactPath)
-	logger.Debugf("defchain artifacts is %+v\n", artifacts)
+	logger.Infof("defchain artifacts is %+v\n", artifacts)
 	//生成证书文件
 	artifacts.GenerateCerts()
 	//生成创世区块
@@ -107,13 +107,16 @@ func (f FabricService) defChannelAndBuild(ctx *gin.Context) {
 }
 
 func (f FabricService) defK8sYamlAndDeploy(ctx *gin.Context) {
+	logger.Infof("fabric service : %+v\n", f)
 	var chain model.FabricChain
 	if err := ctx.ShouldBindJSON(&chain); err != nil {
 		gintool.ResultFail(ctx, err)
 		return
 	}
+	logger.Infof("fabricchain in defk8syamlanddeploy function is %+v\n", chain)
 	//获取目录
 	paths := generate.NewProjetc().BuildProjectDir(chain)
+	logger.Infof("paths in defk8syamlanddeploy function is %+v\n", paths)
 	//生成文件
 	generate.NewFabricK8s(chain, paths).Build()
 
@@ -127,12 +130,14 @@ func (f FabricService) defK8sYamlAndDeploy(ctx *gin.Context) {
 
 	}
 
+	logger.Infof("start deploy#####")
 	//部署k8s
 	res := f.kube.deployData(datas)
 	//返回
 	var ret gintool.RespData
 	err := json.Unmarshal(res, &ret)
 	if err != nil {
+		logger.Errorf("error happend when deploy, %v\n", err)
 		gintool.ResultFail(ctx, err)
 		return
 	}
