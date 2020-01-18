@@ -126,6 +126,7 @@ func (a *ApiController) ChainBuild(ctx *gin.Context) {
 	}
 
 	isSuccess, msg := a.chainService.BuildChain(chain)
+	logger.Infof("issuccess is %v, msg is %v\n", isSuccess, msg)
 	if isSuccess {
 		gintool.ResultMsg(ctx, msg)
 	} else {

@@ -122,7 +122,7 @@ func (l *ChainService) BuildChain(chain *entity.Chain) (bool, string) {
 	if err != nil {
 		return false, "build fail"
 	}
-
+	logger.Infof("defchain response is %+v\n", ret)
 	if ret.Code == 0 {
 		chain.Status = 1
 		return l.UpdateStatus(chain)
