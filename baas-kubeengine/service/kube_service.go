@@ -98,7 +98,6 @@ func (k *KubeService) DeployData(ctx *gin.Context) {
 		gintool.ResultFail(ctx, err)
 		return
 	}
-	logger.Infof("k8s data in kubeengine deploydata function is %+v\nkubeservice is %+v\n", pro, k)
 	que := engine.Bytes2K8sEntities(util.Yamls2Jsons(pro.Data))
 	logger.Infof("que in kubeengine deploydata function is %+v\n", que)
 	engine := engine.NewKubeEngine(que, k.client)
