@@ -710,7 +710,6 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 	// Right now we make about ten retry attempts if we get a Retry-After response.
 	maxRetries := 10
 	retries := 0
-	logger.Infof("ake about ten retry attempts if we get a Retry-After response, url is %+v\n", r.baseURL)
 	for {
 		url := r.URL().String()
 		req, err := http.NewRequest(r.verb, url, r.body)
@@ -738,7 +737,6 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 			r.tryThrottle()
 		}
 		resp, err := client.Do(req)
-		logger.Infof("after client.DO(), get resp is %+v, err is %v\n", resp, err)
 		updateURLMetrics(r, resp, err)
 		if err != nil {
 			r.backoffMgr.UpdateBackoff(r.URL(), err, 0)
@@ -808,7 +806,6 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 //  * If the server responds with a status: *errors.StatusError or *errors.UnexpectedObjectError
 //  * http.Client.Do errors are returned directly.
 func (r *Request) Do() Result {
-	logger.Infof("request in k8s.io is %+v\n", r)
 	r.tryThrottle()
 
 	var result Result

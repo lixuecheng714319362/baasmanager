@@ -95,7 +95,6 @@ func (f FabricService) defChannelAndBuild(ctx *gin.Context) {
 	fsdk := fasdk.NewFabricClient(connectConfig, chain.ChannelName, chain.PeersOrgs, fautil.GetFirstOrderer(chain))
 	defer fsdk.Close()
 	fsdk.Setup()
-	logger.Errorf("fskd is %+v\n, org is %v\n", fsdk, fsdk.Orgs)
 	//创建channel
 	fsdk.CreateChannel(fautil.GetChannelTx(chain, paths.ArtifactPath))
 	//跟新锚节点
