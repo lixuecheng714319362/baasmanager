@@ -1,4 +1,4 @@
 # k8s引擎端口
 BaasKubeEnginePort: 5991
 # k8s集群master config
-BaasKubeMasterConfig: /root/goProject/baasmanager/baas-kubeengine/kubeconfig/config
+BaasKubeMasterConfig: /root/baasmanager/baas-kubeengine/kubeconfig/config
