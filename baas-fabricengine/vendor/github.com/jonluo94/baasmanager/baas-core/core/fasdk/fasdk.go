@@ -169,6 +169,7 @@ func (f *FabricClient) InstallChaincode(chaincodeId, chaincodePath, version stri
 
 func (f *FabricClient) InstantiateChaincode(chaincodeId, chaincodePath, version string, policy string, args [][]byte) ([]byte, error) {
 
+	logger.Infof("InstantiateChaincode, chaincodeId is %v, chaincodePath is %v, version is %v, policy is %v\n", chaincodeId, chaincodePath, version, policy)
 	//"OR ('Org1MSP.member','Org2MSP.member')"
 	ccPolicy, err := cauthdsl.FromString(policy)
 	if err != nil {
@@ -186,6 +187,9 @@ func (f *FabricClient) InstantiateChaincode(chaincodeId, chaincodePath, version 
 		},
 		f.retry,
 	)
+	if err != nil {
+		logger.Errorf("error is %v\n", err)
+	}
 	logger.Info("%s", resp.TransactionID)
 	return []byte(resp.TransactionID), nil
 }

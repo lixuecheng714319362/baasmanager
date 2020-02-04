@@ -487,6 +487,7 @@ func checkRequiredInstallCCParams(req InstallCCRequest) error {
 //  instantiate chaincode response with transaction ID
 func (rc *Client) InstantiateCC(channelID string, req InstantiateCCRequest, options ...RequestOption) (InstantiateCCResponse, error) {
 
+	logger.Info("start InstantiateCC###")
 	opts, err := rc.prepareRequestOpts(options...)
 	if err != nil {
 		return InstantiateCCResponse{}, errors.WithMessage(err, "failed to get opts for InstantiateCC")
