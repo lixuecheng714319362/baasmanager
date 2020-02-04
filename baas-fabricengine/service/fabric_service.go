@@ -305,7 +305,6 @@ func (f FabricService) queryChaincode(ctx *gin.Context) {
 		return
 	}
 	logger.Info("before create channel#####")
-	logger.Infof("channel is %+v\n", channel)
 	logger.Infof("channel args0 is %v, args1 is %v\n", string(channel.Args[0]), channel.Args[1:])
 	//创建channel
 	resp, err := fsdk.QueryChaincode(channel.ChaincodeId, string(channel.Args[0]), channel.Args[1:])
