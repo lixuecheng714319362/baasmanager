@@ -88,7 +88,7 @@ func (h *ProposalProcessorHandler) Handle(requestContext *RequestContext, client
 		if requestContext.PeerSorter != nil {
 			selectionOpts = append(selectionOpts, selectopts.WithPeerSorter(requestContext.PeerSorter))
 		}
-
+		logger.Info("start get endorsers#####")
 		endorsers, err := clientContext.Selection.GetEndorsersForChaincode(newInvocationChain(requestContext), selectionOpts...)
 		if err != nil {
 			requestContext.Error = errors.WithMessage(err, "Failed to get endorsing peers")

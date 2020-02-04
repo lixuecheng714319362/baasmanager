@@ -286,7 +286,6 @@ func (f *FabricClient) QueryBlockByTxid(txid string) (*FabricBlock, error) {
 }
 
 func (f *FabricClient) QueryChaincode(chaincodeId, fcn string, args [][]byte) ([]byte, error) {
-
 	client, err := channel.New(f.sdk.ChannelContext(f.ChannelId, fabsdk.WithUser(f.UserName), fabsdk.WithOrg(f.Orgs[0])))
 	if err != nil {
 		logger.Error(err.Error())
