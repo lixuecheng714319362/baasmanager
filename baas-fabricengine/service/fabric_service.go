@@ -212,6 +212,7 @@ func (f FabricService) buildChaincode(ctx *gin.Context) {
 		gintool.ResultFail(ctx, err)
 		return
 	}
+	logger.Info("start fabric operate")
 	/*操作fabric start*/
 	fsdk := fasdk.NewFabricClient(connectConfig, chain.ChannelName, chain.PeersOrgs, fautil.GetFirstOrderer(chain))
 	defer fsdk.Close()
@@ -220,19 +221,21 @@ func (f FabricService) buildChaincode(ctx *gin.Context) {
 		gintool.ResultFail(ctx, err)
 		return
 	}
+	logger.Info("start install cc")
 	//安装chaincode
 	err = fsdk.InstallChaincode(channel.ChaincodeId, channel.ChaincodePath, channel.Version)
 	if err != nil {
 		gintool.ResultFail(ctx, err)
 		return
 	}
+	logger.Info("start instantiate cc")
 	//实例化chaincode
 	resp, err := fsdk.InstantiateChaincode(channel.ChaincodeId, channel.ChaincodePath, channel.Version, channel.Policy, channel.Args)
 	if err != nil {
 		gintool.ResultFail(ctx, err)
 		return
 	}
-	logger.Info(string(resp))
+	logger.Infof("instantiate cc resp is : %v\n", string(resp))
 	/*操作fabric end*/
 
 	gintool.ResultOk(ctx, string(resp))
@@ -495,7 +498,6 @@ func (f FabricService) invokeChaincode(ctx *gin.Context) {
 }
 
 func (f FabricService) getConnectConfig(chain model.FabricChain, paths generate.UserChainPath) ([]byte, error) {
-	logger.Infof("chain is %+v\n, paths is %+v\n", chain, paths)
 	nss := fautil.GetNamesapces(chain)
 	res := f.kube.getChainDomain(nss)
 
