@@ -189,6 +189,7 @@ func (f *FabricClient) InstantiateChaincode(chaincodeId, chaincodePath, version 
 	)
 	if err != nil {
 		logger.Errorf("error is %v\n", err)
+		return nil, err
 	}
 	logger.Info("%s", resp.TransactionID)
 	return []byte(resp.TransactionID), nil

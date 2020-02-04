@@ -813,6 +813,7 @@ func (rc *Client) sendCCProposal(reqCtx reqContext.Context, ccProposalType chain
 		return txnID, err
 	}
 
+	logger.Infof("targets0 mspid is %v, url is %v\n", targets[0].MSPID(), targets[0].URL())
 	// Process and send transaction proposal
 	txProposalResponse, err := transactor.SendTransactionProposal(tp, peersToTxnProcessors(targets))
 	if err != nil {

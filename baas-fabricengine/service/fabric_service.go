@@ -206,6 +206,7 @@ func (f FabricService) buildChaincode(ctx *gin.Context) {
 	chain := channel.GetChain()
 	//获取目录
 	paths := generate.NewProjetc().BuildProjectDir(chain)
+	logger.Infof("path, artifact:%v, k8sconfig:%v, template:%v, data:%v\n", paths.ArtifactPath, paths.K8sConfigPath, paths.TemplatePath, paths.DataPath)
 	//连接文件
 	connectConfig, err := f.getConnectConfig(chain, paths)
 	if err != nil {
@@ -213,6 +214,7 @@ func (f FabricService) buildChaincode(ctx *gin.Context) {
 		return
 	}
 	logger.Info("start fabric operate")
+	logger.Infof("chaincode bytes is %v\n", channel.ChaincodeBytes)
 	/*操作fabric start*/
 	fsdk := fasdk.NewFabricClient(connectConfig, chain.ChannelName, chain.PeersOrgs, fautil.GetFirstOrderer(chain))
 	defer fsdk.Close()
