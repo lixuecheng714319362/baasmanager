@@ -157,8 +157,10 @@ func (t *Transactor) CreateTransactionHeader(opts ...fab.TxnHeaderOpt) (fab.Tran
 
 // SendTransactionProposal sends a TransactionProposal to the target peers.
 func (t *Transactor) SendTransactionProposal(proposal *fab.TransactionProposal, targets []fab.ProposalProcessor) ([]*fab.TransactionProposalResponse, error) {
+	logger.Infof("SendTransactionProposal")
 	ctx, ok := contextImpl.RequestClientContext(t.reqCtx)
 	if !ok {
+		logger.Error("failed get client context from reqContext for SendTransactionProposal")
 		return nil, errors.New("failed get client context from reqContext for SendTransactionProposal")
 	}
 

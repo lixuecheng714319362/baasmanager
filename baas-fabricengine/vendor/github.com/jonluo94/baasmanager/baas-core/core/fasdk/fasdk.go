@@ -142,6 +142,7 @@ func (f *FabricClient) JoinChannel() error {
 }
 
 func (f *FabricClient) InstallChaincode(chaincodeId, chaincodePath, version string) error {
+	logger.Infof("chaincodepath is %v, goPath is %v\n", chaincodePath, f.GoPath)
 	ccPkg, err := gopackager.NewCCPackage(chaincodePath, f.GoPath)
 	if err != nil {
 		logger.Error(err.Error())
