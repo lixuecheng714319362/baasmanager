@@ -48,7 +48,7 @@ spec:
              subPath: couchdb.peer{{index}}.{{namespace}}
 
         - name: peer{{index}}-{{namespace}}
-          image: hyperledger/fabric-peer:latest
+          image: hyperledger/fabric-peer:1.4.1
           resources:
             limits:
               cpu: "0.25"

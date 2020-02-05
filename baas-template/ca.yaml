@@ -30,7 +30,7 @@ spec:
     spec:
      containers:
        - name: ca
-         image: hyperledger/fabric-ca:latest
+         image: hyperledger/fabric-ca:1.4.1
          resources:
            limits:
              cpu: "0.25"

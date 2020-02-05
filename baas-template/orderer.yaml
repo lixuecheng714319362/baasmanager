@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: orderer{{index}}-{{namespace}}
-        image: hyperledger/fabric-orderer:latest
+        image: hyperledger/fabric-orderer:1.4.1
         resources:
           limits:
             cpu: "0.25"
