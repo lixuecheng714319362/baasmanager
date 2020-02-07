@@ -125,8 +125,8 @@ func (f FabricService) defK8sYamlAndDeploy(ctx *gin.Context) {
 	case constant.OrdererSolo,constant.OrdererEtcdraft:
 		datas.Data = util.Yamls2Bytes(paths.K8sConfigPath, f.kube.baseFiles)
 	case constant.OrdererKafka:
+		logger.Infof("kafkaFiles is %v\n", f.kube.kafkaFiles)
 		datas.Data = util.Yamls2Bytes(paths.K8sConfigPath, append(f.kube.kafkaFiles, f.kube.baseFiles...))
-
 	}
 
 	logger.Infof("start deploy#####")
