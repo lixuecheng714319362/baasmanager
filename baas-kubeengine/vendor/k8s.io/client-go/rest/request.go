@@ -21,7 +21,6 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
-	"github.com/jonluo94/baasmanager/baas-core/common/log"
 	"io"
 	"io/ioutil"
 	"mime"
@@ -51,7 +50,6 @@ var (
 	// longThrottleLatency defines threshold for logging requests. All requests being
 	// throttle for more than longThrottleLatency will be logged.
 	longThrottleLatency = 50 * time.Millisecond
-	logger = log.GetLogger("gateway-controller", log.INFO)
 )
 
 // HTTPClient is an interface for testing a request object.
@@ -758,9 +756,8 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 				Header:     http.Header{"Retry-After": []string{"1"}},
 				Body:       ioutil.NopCloser(bytes.NewReader([]byte{})),
 			}
-			logger.Errorf("response data is %+v\n", resp)
 		}
-		logger.Info("before done func#####")
+
 		done := func() bool {
 			// Ensure the response body is fully read and closed
 			// before we reconnect, so that we reuse the same TCP
@@ -811,7 +808,6 @@ func (r *Request) Do() Result {
 	var result Result
 	err := r.request(func(req *http.Request, resp *http.Response) {
 		result = r.transformResponse(resp, req)
-		logger.Infof("resp in k8s.io request.go Do() is %+v\n", resp)
 	})
 	if err != nil {
 		return Result{err: err}

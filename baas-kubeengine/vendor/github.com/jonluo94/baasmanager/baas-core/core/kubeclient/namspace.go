@@ -17,15 +17,13 @@ func (c *Clients) GetNamespaceList(ops metav1.ListOptions) *corev1.NamespaceList
 	return nss
 }
 
-func (c *Clients) CreateNameSpace(ns *corev1.Namespace) (*corev1.Namespace, error) {
-	logger.Infof("clients in createNameSpec is %+v\n", c.KubeClient.CoreV1().Namespaces())
+func (c *Clients) CreateNameSpace(ns *corev1.Namespace) *corev1.Namespace {
 	nameSpace, err := c.KubeClient.CoreV1().Namespaces().Create(ns)
 	if err != nil {
 		logger.Errorf(err.Error())
-		return nameSpace, err
 	}
 	logger.Infof("Created namesapce %q \n", nameSpace.GetObjectMeta().GetName())
-	return nameSpace, nil
+	return nameSpace
 }
 
 func (c *Clients) DeleteNameSpace(ns *corev1.Namespace, ops *metav1.DeleteOptions) error {
