@@ -86,11 +86,9 @@ func (b *URLBackoff) baseUrlKey(rawurl *url.URL) string {
 func (b *URLBackoff) UpdateBackoff(actualUrl *url.URL, err error, responseCode int) {
 	// range for retry counts that we store is [0,13]
 	if responseCode > maxResponseCode || serverIsOverloadedSet.Has(responseCode) {
-		logger.Info("responseCode > maxResponseCode || serverIsOverloadedSet.Has(responseCode)")
 		b.Backoff.Next(b.baseUrlKey(actualUrl), b.Backoff.Clock.Now())
 		return
 	} else if responseCode >= 300 || err != nil {
-		logger.Info("responseCode >= 300 || err != nil")
 		klog.V(4).Infof("Client is returning errors: code %v, error %v", responseCode, err)
 	}
 
